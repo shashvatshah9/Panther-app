@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "454915986696",
+    "firebase_url": "https://panther-ba4c1.firebaseio.com",
+    "project_id": "panther-ba4c1",
+    "storage_bucket": "panther-ba4c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454915986696:android:c8688a436dc12d18",
+        "android_client_info": {
+          "package_name": "com.crypt.panther"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454915986696-0j791frlvocmks6oisss0iekgf61mqlq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crypt.panther",
+            "certificate_hash": "72da58d600630089da2a5ae600a36819ca246514"
+          }
+        },
+        {
+          "client_id": "454915986696-9r566nqb1oincrneaa02jdcisjm7nu20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuM1B_r-f94bC0c5zojZTQLw0q5zjR-Eo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "454915986696-9r566nqb1oincrneaa02jdcisjm7nu20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
