@@ -27,15 +27,17 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Main2Activity extends AppCompatActivity {
+
     private FloatingActionButton fb;
     private FirebaseAuth fa;
     private TextView textView;
     private FirebaseListAdapter<ChatMessage> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-//
+
         String userID=null;
         Intent recieve = getIntent();
         Bundle extras = getIntent().getExtras();
@@ -45,6 +47,7 @@ public class Main2Activity extends AppCompatActivity {
         textView.setText(userID);
         fb = (FloatingActionButton) findViewById(R.id.fab);
         final String finalUserID = userID;
+
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,13 +56,13 @@ public class Main2Activity extends AppCompatActivity {
                 // Read the input field and push a new instance
                 // of ChatMessage to the Firebase database
                 FirebaseDatabase.getInstance()
-                        .getReference()
-                        .push()
-                        .setValue(new ChatMessage(input.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getEmail(), finalUserID)
-                        );
+                    .getReference()
+                    .push()
+                    .setValue(new ChatMessage(input.getText().toString(),
+                            FirebaseAuth.getInstance()
+                                    .getCurrentUser()
+                                    .getEmail(), finalUserID)
+                    );
 
                 // Clear the input
                 input.setText("");
@@ -98,8 +101,7 @@ public class Main2Activity extends AppCompatActivity {
                     messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
                             model.getMessageTime()));
                     }
-
-
+                    
             }
         };
 

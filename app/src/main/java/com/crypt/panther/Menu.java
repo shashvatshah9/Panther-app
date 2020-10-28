@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 public class Menu {
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
             changeEmail, changePassword, sendEmail, remove, signOut, messages, download;
+
     private Button fn;
 
     private EditText oldEmail, newEmail, password, newPassword;
@@ -39,25 +40,25 @@ public class Menu {
     password = (EditText) findViewById(R.id.password);
     newPassword = (EditText) findViewById(R.id.newPassword);
 
-        oldEmail.setVisibility(View.GONE);
-        newEmail.setVisibility(View.GONE);
-        password.setVisibility(View.GONE);
-        newPassword.setVisibility(View.GONE);
-        changeEmail.setVisibility(View.GONE);
-        changePassword.setVisibility(View.GONE);
-        sendEmail.setVisibility(View.GONE);
-        remove.setVisibility(View.GONE);
+    oldEmail.setVisibility(View.GONE);
+    newEmail.setVisibility(View.GONE);
+    password.setVisibility(View.GONE);
+    newPassword.setVisibility(View.GONE);
+    changeEmail.setVisibility(View.GONE);
+    changePassword.setVisibility(View.GONE);
+    sendEmail.setVisibility(View.GONE);
+    remove.setVisibility(View.GONE);
 
     progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        if (progressBar != null) {
+    if (progressBar != null) {
         progressBar.setVisibility(View.GONE);
     }
 
-        btnChangeEmail.setOnClickListener(new View.OnClickListener() {
+    btnChangeEmail.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(user.isEmailVerified()) {
+            if (user.isEmailVerified()) {
                 oldEmail.setVisibility(View.GONE);
                 newEmail.setVisibility(View.VISIBLE);
                 password.setVisibility(View.GONE);
@@ -66,32 +67,31 @@ public class Menu {
                 changePassword.setVisibility(View.GONE);
                 sendEmail.setVisibility(View.GONE);
                 remove.setVisibility(View.GONE);
-            }
-            else{
+            } else {
                 Toast.makeText(getApplicationContext(), "Please verify your e-mail address to use the service", Toast.LENGTH_SHORT);
             }
         }
     });
 
-        changeEmail.setOnClickListener(new View.OnClickListener() {
+    changeEmail.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             progressBar.setVisibility(View.VISIBLE);
             if (user != null && !newEmail.getText().toString().trim().equals("")) {
                 user.updateEmail(newEmail.getText().toString().trim())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(MainActivity.this, "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
-                                    signOut();
-                                    progressBar.setVisibility(View.GONE);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Failed to update email!", Toast.LENGTH_LONG).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                                signOut();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to update email!", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
                             }
-                        });
+                        }
+                    });
             } else if (newEmail.getText().toString().trim().equals("")) {
                 newEmail.setError("Enter email");
                 progressBar.setVisibility(View.GONE);
@@ -99,7 +99,7 @@ public class Menu {
         }
     });
 
-        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+    btnChangePassword.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(user.isEmailVerified()) {
@@ -111,14 +111,13 @@ public class Menu {
                 changePassword.setVisibility(View.VISIBLE);
                 sendEmail.setVisibility(View.GONE);
                 remove.setVisibility(View.GONE);
-            }
-            else{
+            } else{
                 Toast.makeText(getApplicationContext(), "Please verify your e-mail address to use the service", Toast.LENGTH_SHORT);
             }
         }
     });
 
-        changePassword.setOnClickListener(new View.OnClickListener() {
+    changePassword.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             progressBar.setVisibility(View.VISIBLE);
@@ -149,10 +148,10 @@ public class Menu {
         }
     });
 
-        btnSendResetEmail.setOnClickListener(new View.OnClickListener() {
+    btnSendResetEmail.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(user.isEmailVerified()) {
+            if (user.isEmailVerified()) {
                 oldEmail.setVisibility(View.VISIBLE);
                 newEmail.setVisibility(View.GONE);
                 password.setVisibility(View.GONE);
@@ -161,31 +160,30 @@ public class Menu {
                 changePassword.setVisibility(View.GONE);
                 sendEmail.setVisibility(View.VISIBLE);
                 remove.setVisibility(View.GONE);
-            }
-            else{
+            } else{
                 Toast.makeText(getApplicationContext(), "Please verify your e-mail address to use the service", Toast.LENGTH_SHORT);
             }
         }
     });
 
-        sendEmail.setOnClickListener(new View.OnClickListener() {
+    sendEmail.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             progressBar.setVisibility(View.VISIBLE);
             if (!oldEmail.getText().toString().trim().equals("")) {
                 auth.sendPasswordResetEmail(oldEmail.getText().toString().trim())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(MainActivity.this, "Reset password email is sent!", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Reset password email is sent!", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
                             }
-                        });
+                        }
+                    });
             } else {
                 oldEmail.setError("Enter email");
                 progressBar.setVisibility(View.GONE);
@@ -193,31 +191,31 @@ public class Menu {
         }
     });
 
-        btnRemoveUser.setOnClickListener(new View.OnClickListener() {
+    btnRemoveUser.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             progressBar.setVisibility(View.VISIBLE);
             if (user != null) {
                 user.delete()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(MainActivity.this, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(MainActivity.this, SignupActivity.class));
-                                    finish();
-                                    progressBar.setVisibility(View.GONE);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, SignupActivity.class));
+                                finish();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
                             }
-                        });
+                        }
+                    });
             }
         }
     });
 
-        signOut.setOnClickListener(new View.OnClickListener() {
+    signOut.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             signOut();
@@ -226,7 +224,7 @@ public class Menu {
 
     messages = (Button) findViewById(R.id.messages);
 
-        messages.setOnClickListener(new View.OnClickListener() {
+    messages.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent x = new Intent(MainActivity.this, RecipientSelector.class);
@@ -235,7 +233,7 @@ public class Menu {
         }
     });
 
-        download.setOnClickListener(new View.OnClickListener() {
+    download.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent i = new Intent(MainActivity.this, RecipientSelector.class);
@@ -244,7 +242,7 @@ public class Menu {
         }
     });
 
-        fn.setOnClickListener(new View.OnClickListener() {
+    fn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent i = new Intent(MainActivity.this, RecipientSelector.class);

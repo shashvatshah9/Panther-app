@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity{
 
-
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
@@ -55,24 +54,21 @@ public class MainActivity extends AppCompatActivity{
                     // launch login activity
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
-                }
-                else{
-                    if(!user.isEmailVerified()) {
+                } else {
+                    if (!user.isEmailVerified()) {
                         user.sendEmailVerification()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "E-mail verification link has been sent to your e-mail address", Toast.LENGTH_SHORT);
-                                        }
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(), "E-mail verification link has been sent to your e-mail address", Toast.LENGTH_SHORT);
                                     }
-                                });
+                                }
+                            });
                     }
                 }
             }
         };
-
-
 
     }
 

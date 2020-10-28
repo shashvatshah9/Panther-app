@@ -99,6 +99,7 @@ public class FileSelector2 extends AppCompatActivity {
         });
         //tv.setText(path);
     }
+
     @SuppressWarnings("VisibleForTests")
     private void fileUploader() throws Exception {
 
@@ -136,11 +137,11 @@ public class FileSelector2 extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 firebaseDatabase.getReference().push()
-                        .setValue(new ChatMessage(s,
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getEmail(), recip)
-                        );
+                    .setValue(new ChatMessage(s,
+                            FirebaseAuth.getInstance()
+                                    .getCurrentUser()
+                                    .getEmail(), recip)
+                    );
                 Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
             }
         });
@@ -156,12 +157,12 @@ public class FileSelector2 extends AppCompatActivity {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 double progress = (100*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
-                if(progress==100) {
+                if (progress == 100) {
                     dialogue.dismiss();
                     Log.d("UPLOADED", "Upload task completed");
-                }
-                else
+                } else {
                     dialogue.setMessage("Uploaded " + (int) progress + "%");
+                }
             }
         });
 
