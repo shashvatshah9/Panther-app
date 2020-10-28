@@ -27,6 +27,7 @@ public class Download extends AppCompatActivity {
     private String recip;
     private Button button;
     private EditText editText;
+
     @SuppressWarnings("VisibleForTests")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,35 +74,34 @@ public class Download extends AppCompatActivity {
                 File f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename1+".jpg");
                 File myFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
 
-                downref.getFile(myFile).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        dialogue.dismiss();
-                    }
-                })
-                        .addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
-
-
-                                Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_SHORT).show();
+                downref.getFile(myFile)
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            dialogue.dismiss();
+                        }
+                    })
+                    .addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                            Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
+                            if (progress == 100) {
+                                dialogue.dismiss();
+                            } else {
+                                dialogue.setMessage("Downloaded " + (int) progress + "%");
                             }
-                        })
-                        .addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                double progress = (100*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
-                                if(progress==100)
-                                    dialogue.dismiss();
-                                else
-                                    dialogue.setMessage("Downloaded " + (int) progress + "%");
-                            }
-                        });
+                        }
+                    });
+
                 try {
- 
                      f = downlo.downloader(myFile, filename1, filesize);
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

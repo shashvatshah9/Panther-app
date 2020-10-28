@@ -3,7 +3,7 @@ package com.crypt.panther;
 import java.util.Date;
 
 /**
- * Created by mynameislt on 3/31/2017.
+ * Created by lovlin-thakkar on 3/31/2017.
  */
 
 public class ChatMessage {
@@ -16,14 +16,10 @@ public class ChatMessage {
     public ChatMessage(String messageText, String messageUser, String userID) {
         this.messageText = messageText;
         this.messageUser = messageUser;
-        // Initialize to current time
-        messageTime = new Date().getTime();
         this.userID  = userID;
 
-    }
-
-    public ChatMessage(){
-
+        // Initialize to current time
+        messageTime = new Date().getTime();
     }
 
     public String getMessageText() {
@@ -50,8 +46,12 @@ public class ChatMessage {
         this.messageTime = messageTime;
     }
 
-    public void setUserID(String userID){this.userID = userID;}
+    public void setUserID(String userID) { 
+        this.userID = userID;
+    }
 
-    public String getUserID(){return userID;}
+    public String getUserID() { 
+        return userID;
+    }
 
 }
