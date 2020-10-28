@@ -11,10 +11,10 @@ import android.util.Log;
 import java.io.*;
 import java.util.*;
 
-
 public class steg{
 
     private Context context;
+
     public steg(Context context){
         this.context = context;
     }
@@ -24,15 +24,15 @@ public class steg{
         File wav2 = new File("select path from res");
         File wav3 = new File("select path from res");
 
-        if(file_size < 1024*1024*2 ){   //less than 5 mb
+        if (file_size < 1024*1024*2) {   //less than 5 mb
             return wav1;
-        }
-        else if(file_size > 1024*1024*2 && file_size < 1024*1024*5){   //more than 5 and less than 20
+        } else if (file_size > 1024*1024*2 && file_size < 1024*1024*5) {   //more than 5 and less than 20
             return wav2;
-        }
-        else                                                        // more than 20
+        } else {                                                        // more than 20
             return wav3;
+        }
     }
+
     static String cla = "steg";
 
 
@@ -64,14 +64,14 @@ public class steg{
 
             byte[] a = {(byte)0b00000001, (byte)0b00000010, (byte)0b00000100, (byte)0b00001000, (byte)0b00010000, (byte)0b00100000,(byte)0b01000000, (byte)0b10000000};
 
-            //taking message to hide in audio file as user input and converting it to byte array
+            // taking message to hide in audio file as user input and converting it to byte array
             // converts the selected file to bytes
             byte[] header = new byte[44];
             System.arraycopy(filedata, 0, header, 0, 44);
             byte[] musicdata = new byte[filedata.length-44];
             System.arraycopy(filedata, 44, musicdata, 0, filedata.length-44);
 
-            //LSB steganography
+            // LSB steganography
             for(int j=0; j<msg.length; j++){
                 for(int i=0; i<8; i++){
                     musicdata[8*j+i] &= 0b11111110;
@@ -83,19 +83,16 @@ public class steg{
             System.arraycopy(header, 0, newdata, 0, 44);
             System.arraycopy(musicdata, 0, newdata, 44, filedata.length-44);
             element.data = newdata;
-        }
-        catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
-        }
-        finally{
-
+        } finally {
             if (fis != null) {
                 fis.close();
             }
         }
-       // System.out.println(cla+": returning the steganographed bytes .. length : " +newdata.length +"SIze: "+size);
-        return element;
 
+        // System.out.println(cla+": returning the steganographed bytes .. length : " +newdata.length +"SIze: "+size);
+        return element;
     }
 
     File desteganograph(File steg_file, String pathToFile, int size) throws IOException{
@@ -125,15 +122,14 @@ public class steg{
             fileToReturn = obj.byteconvfile(mes, path);
             //System.out.println(cla+ ": Name: "+fileToReturn.getName()+" .. Length:"+fileToReturn.length());
             //message = new String(mes);
-        }
-        catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
-        }
-        finally{
+        } finally{
             if (fis != null) {
                 fis.close();
             }
         }
+
         //System.out.println(cla+": returing the deteganographed file Name: "+fileToReturn.getName()+"..Length :"+fileToReturn.length());
         //return to constructed file..
         return fileToReturn;

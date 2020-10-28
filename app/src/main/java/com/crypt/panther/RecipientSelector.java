@@ -11,6 +11,7 @@ public class RecipientSelector extends AppCompatActivity {
     private Button select;
     private EditText intendeduser;
     private String key = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +27,18 @@ public class RecipientSelector extends AppCompatActivity {
                 Intent m = new Intent(RecipientSelector.this, Download.class);
                 Intent n = new Intent(RecipientSelector.this, FileSelector2.class);
                 Intent z = new Intent(RecipientSelector.this, Main2Activity.class);
+                
                 n.putExtra("recip", intendeduser.getText().toString());
                 m.putExtra("recip", intendeduser.getText().toString());
                 z.putExtra("recip", intendeduser.getText().toString());
-                if(key.equalsIgnoreCase("mess"))
+                
+                if (key.equalsIgnoreCase("mess")) {
                     startActivity(n);
-                else if(key.equalsIgnoreCase("down"))
+                } else if(key.equalsIgnoreCase("down")) {
                     startActivity(m);
-                else
+                } else
                     startActivity(z);
+                }
             }
         });
     }

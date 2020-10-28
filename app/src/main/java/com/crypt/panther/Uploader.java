@@ -12,13 +12,13 @@ import java.io.IOException;
 
 public class Uploader {
 
-
     private Context context;
+
     public Uploader(Context context){
         this.context = context;
     }
 
-     public elem Upload(byte[] msg) throws IOException {
+    public elem Upload(byte[] msg) throws IOException {
          impSteg obj = new impSteg(context);
          return obj.encSteg(msg);
     }
@@ -26,12 +26,13 @@ public class Uploader {
     public File downloader(File file, String fileName, int size) throws IOException {
         impSteg obj = new impSteg(context);
         File myFile = null;
+        
         try {
             myFile= obj.decSteg(file, fileName, size);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return myFile;
     }
 }
