@@ -54,15 +54,12 @@ public class FileSelector extends AppCompatActivity {
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-
-
         imgView = (ImageView) findViewById(R.id.image);
         editText = (EditText) findViewById(R.id.edittext);
 
         Intent g = getIntent();
         Bundle extras = g.getExtras();
         recip = extras.getString("recip");
-
     }
 
     public void btnBrowse_Click(View v){
@@ -95,9 +92,9 @@ public class FileSelector extends AppCompatActivity {
     }
 
     @SuppressWarnings("VisibleForTests")
-    public void btnUpload_Click(View view){
-        if(FirebaseAuth.getInstance().getCurrentUser() != null)
-            if(imgUri!=null){
+    public void btnUpload_Click(View view) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            if (imgUri != null) {
                 final ProgressDialog dialogue = new ProgressDialog(this);
                 dialogue.setTitle("Uploading Image");
                 dialogue.show();
@@ -106,43 +103,39 @@ public class FileSelector extends AppCompatActivity {
                 StorageReference ref = mStorageRef.child(FB_STORAGE_PATH + "/" + "to:" + recip + "_by:" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + System.currentTimeMillis() + "." + getImageExt(imgUri));
 
                 //Add file to reference
-                ref.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                ref.putFile(imgUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            dialogue.dismiss();
+                            Toast.makeText(getApplicationContext(), "Successfully Uploaded!", Toast.LENGTH_SHORT).show();
 
-                        dialogue.dismiss();
-                        Toast.makeText(getApplicationContext(), "Successfully Uploaded!", Toast.LENGTH_SHORT).show();
+                            ImageUpload imgupload = new ImageUpload(editText.getText().toString(), taskSnapshot.getDownloadUrl().toString());
+                            String uploadid = mDBRef.push().getKey();
+                            mDBRef.child(uploadid).setValue(imgupload);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            dialogue.dismiss();
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
 
-                        ImageUpload imgupload = new ImageUpload(editText.getText().toString(), taskSnapshot.getDownloadUrl().toString());
-                        String uploadid = mDBRef.push().getKey();
-                        mDBRef.child(uploadid).setValue(imgupload);
-
-                    }
-                })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                                dialogue.dismiss();
-                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        })
-
-                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-
-                                double progress = 100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount();
-                                dialogue.setMessage("Uploaded " + (int) progress);
-
-                            }
-                        });
-            }
-            else{
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = 100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount();
+                            dialogue.setMessage("Uploaded " + (int) progress);
+                        }
+                    });
+            } else {
                 Toast.makeText(getApplicationContext(), "Please Select a File", Toast.LENGTH_SHORT).show();
             }
-        else
+        } else {
             Toast.makeText(getApplicationContext(), "Please Login first, to Upload the File", Toast.LENGTH_SHORT);
+        }
     }
+    
 }
