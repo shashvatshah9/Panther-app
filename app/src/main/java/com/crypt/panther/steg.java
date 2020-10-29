@@ -24,19 +24,22 @@ public class steg{
         File wav2 = new File("select path from res");
         File wav3 = new File("select path from res");
 
-        if (file_size < 1024*1024*2) {   //less than 5 mb
+        if (file_size < 1024*1024*2) {
+            // less than 5 mb
             return wav1;
-        } else if (file_size > 1024*1024*2 && file_size < 1024*1024*5) {   //more than 5 and less than 20
+        } else if (file_size > 1024*1024*2 && file_size < 1024*1024*5) {
+            // more than 5 and less than 20
             return wav2;
-        } else {                                                        // more than 20
+        } else {
+            // more than 20
             return wav3;
         }
     }
 
     static String cla = "steg";
 
-
-    elem steganograph(byte msg[]) throws IOException{          //mFile is the file selected by the user...
+    // mFile is the file selected by the user...
+    elem steganograph(byte msg[]) throws IOException{
         FileInputStream fis = null;
         byte[] newdata = null;
 
@@ -51,9 +54,7 @@ public class steg{
             element.size = size;
             //File f = selectWavFile(size);
 
-            /**
-             * f is the wav file...
-             */
+            // f is the wav file...
             //File f = new File("\\res\\raw\\music.wav");
             InputStream ins = context.getResources().openRawResource(R.raw.music);
             //fis = (FileInputStream) ins;
@@ -78,6 +79,7 @@ public class steg{
                     musicdata[8*j+i] |= (byte) (((byte) (msg[j] & a[i])) >> (i));
                 }
             }
+            
             System.out.println(cla+": data has been steganographed ");
             newdata = new byte[filedata.length];
             System.arraycopy(header, 0, newdata, 0, 44);

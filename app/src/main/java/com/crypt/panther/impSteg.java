@@ -44,23 +44,20 @@ public class impSteg {
     }
 
     File decSteg(File f1, String fileName, int size) throws IOException {
-
         steg ob = new steg(context);
-        //File f1 = new File("special_music.wav");
-        //System.out.println(cla+": converting the special_music file to byte.");
+        // converting the music file to bytes
 
         convFile cv = new convFile();
         byte[] b = convFile.fileconvbyte(f1);
 
-        //System.out.println(cla+":decrypting the file special music");
+        // decrypting the file
         EncrypterClass ec = new EncrypterClass();
         byte[] s = EncrypterClass.Adecrypt(b);
 
-        //System.out.println(cla+": storing the decypted file to the new file special music_D");
+        // storing the decypted file to the new file
         f1 = convFile.byteconvfile(s, "special_music_D.wav");
 
-
-        //System.out.println(cla+": calling desteganograph and storing it in huffmanencoding2.pdf");
+        // calling desteganograph and storing it
         File m = ob.desteganograph(f1, fileName+".jpg" , size);
 
         return m;

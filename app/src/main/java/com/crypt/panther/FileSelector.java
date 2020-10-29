@@ -99,10 +99,10 @@ public class FileSelector extends AppCompatActivity {
                 dialogue.setTitle("Uploading Image");
                 dialogue.show();
 
-                //Get the storage reference
+                // Get the storage reference
                 StorageReference ref = mStorageRef.child(FB_STORAGE_PATH + "/" + "to:" + recip + "_by:" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + System.currentTimeMillis() + "." + getImageExt(imgUri));
 
-                //Add file to reference
+                // Add file to reference
                 ref.putFile(imgUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override

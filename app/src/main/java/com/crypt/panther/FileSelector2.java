@@ -53,7 +53,6 @@ public class FileSelector2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_selector2);
 
-
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReferenceFromUrl("gs://panther-ba4c1.appspot.com");
 
@@ -64,15 +63,15 @@ public class FileSelector2 extends AppCompatActivity {
 
         spaceReference = storageReference.child("Files");
 
-        //To create bytearray, we can replace this later
-//        mImageView.setDrawingCacheEnabled(true);
-//        mImageView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-//        mImageView.layout(0, 0, mImageView.getMeasuredWidth(), mImageView.getMeasuredHeight());
-//        mImageView.buildDrawingCache();
-//        Bitmap bitmap = Bitmap.createBitmap(mImageView.getDrawingCache());
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-//        byte[] data = outputStream.toByteArray();
+        // To create bytearray, we can replace this later
+        // mImageView.setDrawingCacheEnabled(true);
+        // mImageView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        // mImageView.layout(0, 0, mImageView.getMeasuredWidth(), mImageView.getMeasuredHeight());
+        // mImageView.buildDrawingCache();
+        // Bitmap bitmap = Bitmap.createBitmap(mImageView.getDrawingCache());
+        // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        // bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        // byte[] data = outputStream.toByteArray();
 
         recip = getIntent().getExtras().getString("recip");
 
@@ -97,7 +96,6 @@ public class FileSelector2 extends AppCompatActivity {
                 }
             }
         });
-        //tv.setText(path);
     }
 
     @SuppressWarnings("VisibleForTests")
@@ -118,17 +116,12 @@ public class FileSelector2 extends AppCompatActivity {
         Compressor comp = new Compressor();
         Uploader uplo = new Uploader(getApplicationContext());
         final elem element = uplo.Upload(upload);
-        //final elem elobj = comp.compressData(element.data);
 
         final String s = "/" + "to:" + recip + "_by:" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + "-(" + String.valueOf(element.size) +/* ":" + String.valueOf(elobj.size) +*/ ").wav";
 
         StorageReference ref = spaceReference.child(s);
 
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-
-//        byte array[] = new byte[elobj.size];
-//
-//        System.arraycopy(elobj.data, 0, array, 0, elobj.size);
 
         Log.d("UPLOAD","Upload will start below");
         UploadTask uploadTask = ref.putBytes(element.data);
