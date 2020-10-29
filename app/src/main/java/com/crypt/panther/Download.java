@@ -42,14 +42,6 @@ public class Download extends AppCompatActivity {
 
         Firebase fb = new Firebase("https://panther-ba4c1.firebaseio.com/");
 
-//        File storagePath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "directory_name");
-//        // Create direcorty if not exists
-//        if(!storagePath.exists()) {
-//            Log.d("MKDIR", String.valueOf(storagePath.mkdir()));
-//        }
-
-//        Log.d("STORAGEPATH", storagePath.getAbsolutePath().toString());
-
         editText = (EditText) findViewById(R.id.fname);
 
         button = (Button) findViewById(R.id.download);
@@ -108,5 +100,6 @@ public class Download extends AppCompatActivity {
             }
 
         });
+        
     }
 }

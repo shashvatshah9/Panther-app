@@ -24,12 +24,14 @@ import javax.crypto.spec.SecretKeySpec;
 
 
 public class EncrypterClass {
-    private static final String key = "Bar12345Bar12345"; // 128 bit key
-    private static final String initVector = "RandomInitVector"; // 16 bytes IV
+    // TODO: store these as env secret
+    // 128 bit key
+    private static final String key = "Bar12345Bar12345"; 
+    // 16 bytes IV
+    private static final String initVector = "RandomInitVector";
 
     String retKey(){
         return key;
-
     }
 
     String retInitVec(){
@@ -52,7 +54,6 @@ public class EncrypterClass {
             System.out.println(cla+": returning from Aencrpyt class .. Length: "+encrypted.length);
 
             return encrypted;
-            //return Base64.getEncoder().encodeToString(encrypted);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -62,7 +63,6 @@ public class EncrypterClass {
 
     synchronized public static byte[] Adecrypt(byte[] encrypted) {
         try {
-            //System.out.println("dec : " + Base64.getEncoder().encodeToString(encrypted));
             System.out.println(cla+": inside Aencrpyt class");
 
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
@@ -75,7 +75,6 @@ public class EncrypterClass {
             System.out.println(cla+": returning  Adencrpyt class the decrypted bytes");
 
             return original;
-            //return new String(original);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -84,4 +83,3 @@ public class EncrypterClass {
     }
 
 }
-
